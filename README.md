@@ -1,5 +1,7 @@
 # Powder Monkey
 
+![](src/assets/powder_monkey.jpg)
+
 Front end of the Powder monkey, it is a WebUI to display and operate the store used by [Anchor](https://github.com/hainesc/anchor)
 
 ## Build
