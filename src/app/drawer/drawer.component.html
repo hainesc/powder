@@ -1,0 +1,27 @@
+<div>
+  <mat-drawer-container autosize>
+    <mat-drawer #drawer mode="side" role="navigation" opened="{{opened}}">
+      <mat-nav-list>
+
+	<mat-list-item routerLink="/binding" routerLinkActive>
+            <mat-icon>home</mat-icon>
+            Binding
+	</mat-list-item>
+
+	<mat-list-item routerLink="/allocate" routerLinkActive>
+            <mat-icon>assignment</mat-icon>
+            Allocate
+	</mat-list-item>
+
+	<mat-list-item routerLink="/gateway" routerLinkActive>
+            <mat-icon>settings</mat-icon>
+            Gateway
+	</mat-list-item>
+
+      </mat-nav-list>
+    </mat-drawer>
+    <mat-drawer-content role="main">
+      <router-outlet></router-outlet>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</div>
