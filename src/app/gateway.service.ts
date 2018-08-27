@@ -4,10 +4,6 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Gateway } from './gateway'
 
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
-
 @Injectable({
   providedIn: 'root'
 })
@@ -42,18 +38,6 @@ export class GatewayService {
     return this.http.patch(this.gwUrl, deleteGateway, options)
   }
 
-  addIpAddress(tenant: string, newIp: string[]): Promise<any> {
-    const options = {
-      headers: new HttpHeaders({ 'content-type': 'application/json' })
-    }
-    return this.http.post(`api/v1/${tenant}/ip`, newIp, options)
-      .toPromise()
-      .then((res) => {
-        return res;
-      })
-      .catch(this.handleError);
-  }
-
   /**
    * Handle Http operation that failed.
    * Let the app continue.
@@ -73,11 +57,4 @@ export class GatewayService {
       return of(result as T);
     }
   }
-
-  /*
-  private handleError(error: any): Promise<any> {
-    console.error('An error happened in service', error);
-    return Promise.reject(error.body || error);
-  }
-  */
 }

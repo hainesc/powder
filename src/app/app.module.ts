@@ -52,6 +52,7 @@ import { RoutingModule } from './/routing.module';
 import { SnackbarComponent } from './snackbar/snackbar.component';
 import { SearchComponent } from './search/search.component';
 import { AboutComponent } from './about/about.component';
+import { BindingComponent } from './binding/binding.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { AboutComponent } from './about/about.component';
     SnackbarComponent,
     SearchComponent,
     AboutComponent,
+    BindingComponent,
   ],
   imports: [
     BrowserModule,

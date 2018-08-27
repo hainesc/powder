@@ -22,10 +22,9 @@ export class GatewayComponent implements OnInit {
 
   displayedColumns = ['select', 'subnet', 'gw'];
   dataSource: MatTableDataSource<Gateway>;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   selection = new SelectionModel<Gateway>(true, []);
   gateways: Gateway[];
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-
   constructor(
     private gatewayService: GatewayService,
     private dialog: MatDialog,
