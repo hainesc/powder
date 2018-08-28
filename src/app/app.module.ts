@@ -53,6 +53,7 @@ import { SnackbarComponent } from './snackbar/snackbar.component';
 import { SearchComponent } from './search/search.component';
 import { AboutComponent } from './about/about.component';
 import { BindingComponent } from './binding/binding.component';
+import { AllocateComponent, AddAllocateDialog } from './allocate/allocate.component';
 
 @NgModule({
   declarations: [
@@ -61,10 +62,12 @@ import { BindingComponent } from './binding/binding.component';
     ToolbarComponent,
     GatewayComponent,
     AddGatewayDialog,
+    AddAllocateDialog,
     SnackbarComponent,
     SearchComponent,
     AboutComponent,
     BindingComponent,
+    AllocateComponent,
   ],
   imports: [
     BrowserModule,
@@ -110,6 +113,7 @@ import { BindingComponent } from './binding/binding.component';
   ],
   entryComponents: [
     AddGatewayDialog,
+    AddAllocateDialog,
     SnackbarComponent
   ],
   providers: [

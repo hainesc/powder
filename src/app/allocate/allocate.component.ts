@@ -9,46 +9,47 @@ import {
 } from '@angular/material';
 
 import { SelectionModel } from '@angular/cdk/collections';
-import { Gateway } from '../gateway';
-import { GatewayService } from '../gateway.service';
+import { Allocate } from '../allocate';
+import { AllocateService } from '../allocate.service';
 import { SnackbarComponent } from "../snackbar/snackbar.component";
 
 @Component({
-  selector: 'app-gateway',
-  templateUrl: './gateway.component.html',
-  styleUrls: ['./gateway.component.css']
+  selector: 'app-allocate',
+  templateUrl: './allocate.component.html',
+  styleUrls: ['./allocate.component.css']
 })
-export class GatewayComponent implements OnInit {
+export class AllocateComponent implements OnInit {
 
-  displayedColumns = ['select', 'subnet', 'gw'];
-  dataSource: MatTableDataSource<Gateway>;
+  displayedColumns = ['select', 'ns', 'ips'];
+  dataSource: MatTableDataSource<Allocate>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  selection = new SelectionModel<Gateway>(true, []);
-  gateways: Gateway[];
+  selection = new SelectionModel<Allocate>(true, []);
+  allocates: Allocate[];
+
   constructor(
-    private gatewayService: GatewayService,
+    private allocateService: AllocateService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.getGateways();
+    this.getAllocates();
   }
 
-  getGateways(): void {
-    this.gatewayService.getGateway()
+  getAllocates(): void {
+    this.allocateService.getAllocate()
       .subscribe(result => {
-        this.gateways = result;
-        this.dataSource = new MatTableDataSource<Gateway>(this.gateways);
+        this.allocates = result;
+        this.dataSource = new MatTableDataSource<Allocate>(this.allocates);
         this.dataSource.paginator = this.paginator;
       });
   }
 
-  addGateway(): void {
-    const dialogRef = this.dialog.open(AddGatewayDialog, {
+  addAllocate(): void {
+    const dialogRef = this.dialog.open(AddAllocateDialog, {
       width: '250px',
       data: {
         // No data passed to the front end, just a type.
-        gateway: Gateway
+        allocate: Allocate
       }
     });
 
@@ -56,42 +57,42 @@ export class GatewayComponent implements OnInit {
       if (!result) {
         return;
       }
-      if (result['gw'] && result['subnet']) {
-        this.gatewayService.addGateway(result)
+      if (result['ns'] && result['ips']) {
+        this.allocateService.addAllocate(result)
           .subscribe(
             () => {
               this.snackBar.openFromComponent(SnackbarComponent, {
                 data: 'Success'
               });
               // refresh
-              this.getGateways();
+              this.getAllocates();
             },
             err => {
               this.snackBar.openFromComponent(SnackbarComponent, {
                 data: 'Failed'
               });
-              console.error('Add gateway failed', err);
+              console.error('Add Allocate failed', err);
             })
       }
     });
   }
 
-  deleteGateway(): void {
+  deleteAllocate(): void {
     if (this.selection && !this.selection.isEmpty()) {
-      this.gatewayService.deleteGateway(this.selection.selected)
+      this.allocateService.deleteAllocate(this.selection.selected)
         .subscribe(
           () => {
             this.snackBar.openFromComponent(SnackbarComponent, {
               data: 'Success'
             });
             this.selection.clear()
-            this.getGateways();
+            this.getAllocates();
           },
           err => {
             this.snackBar.openFromComponent(SnackbarComponent, {
               data: 'Failed'
             });
-            console.error('Add gateway failed', err);
+            console.error('Delete Allocate failed', err);
           }
         )
     }
@@ -113,21 +114,21 @@ export class GatewayComponent implements OnInit {
 }
 
 @Component({
-  selector: 'add-gateway-dialog',
+  selector: 'add-allocate-dialog',
   template: `
-<h1 mat-dialog-title>Add subnet and gateway</h1>
+<h1 mat-dialog-title>Allocate</h1>
 
 <div mat-dialog-content>
-  <p>Subnet</p>
+  <p>Namespace</p>
   <mat-form-field>
-    <input matInput [(ngModel)]="data.subnet" placeholder="eg: 10.0.1.0/24">
+    <input matInput [(ngModel)]="data.ns" placeholder="eg: default">
   </mat-form-field>
 </div>
 
 <div mat-dialog-content>
-  <p>Gateway</p>
+  <p>IPs</p>
   <mat-form-field>
-    <input matInput [(ngModel)]="data.gw" placeholder="eg: 10.0.1.1">
+    <input matInput [(ngModel)]="data.ips" placeholder="eg: 10.0.1.1,10.0.4.[9-12]">
   </mat-form-field>
 </div>
 
@@ -137,13 +138,12 @@ export class GatewayComponent implements OnInit {
 </div>
 `
 })
-export class AddGatewayDialog {
+export class AddAllocateDialog {
   constructor(
-    public dialogRef: MatDialogRef<AddGatewayDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: Gateway) { }
+    public dialogRef: MatDialogRef<AddAllocateDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: Allocate) { }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 }
-

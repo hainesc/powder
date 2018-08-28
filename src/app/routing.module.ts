@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { GatewayComponent } from './gateway/gateway.component';
 import { BindingComponent } from './binding/binding.component';
+import { AllocateComponent } from './allocate/allocate.component';
 const routes: Routes = [
   {
     path: '',
@@ -12,6 +13,10 @@ const routes: Routes = [
   {
     path: 'binding',
     component: BindingComponent
+  },
+  {
+    path: 'allocate',
+    component: AllocateComponent
   },
   {
     path: 'gateway',
